@@ -24,7 +24,7 @@ function Post({ post }) {
   const checkIsLiked = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/books/${post._id}/isliked`,
+        `http://127.0.0.1:8000/api/recipes/${post.id}/liked`,
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -41,8 +41,8 @@ function Post({ post }) {
     try {
       if (isLiked) {
         
-        await axios.post(
-          `http://localhost:8000/books/${post._id}/unlike`,
+        await axios.delete(
+          `http://127.0.0.1:8000/api/recipes/${post.id}/like`,
           {},
           {
             headers: {
@@ -53,7 +53,7 @@ function Post({ post }) {
       } else {
        
         await axios.post(
-          `http://localhost:8000/books/${post._id}/like`,
+          `http://127.0.0.1:8000/api/recipes/${post.id}/like`,
           {},
           {
             headers: {
