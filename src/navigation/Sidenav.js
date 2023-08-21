@@ -10,7 +10,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import MenuIcon from "@mui/icons-material/Menu";
 import Modal from "./Modal"
 import SearchModal from "./SearchModal";
-import logo from "../images/logo192.png";
+import logo from "../images/Recipe_logo.jpeg";
 
 function Sidenav({fetchPosts}) {
 

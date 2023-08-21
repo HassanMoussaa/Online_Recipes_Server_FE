@@ -1,5 +1,5 @@
 .post {
-  width: 550px;
+  width: 300px;
   margin: 30px 40px 50px 40px;
 }
 
@@ -9,6 +9,10 @@
   flex-direction: row;
   align-items: center;
   margin-bottom: 10px;
+}
+
+.timeline__left {
+  display: flex;
 }
 
 .post__headerAuthor {
@@ -85,13 +89,13 @@
 }
 
 /* Add Comment Pop-up */
-/* Add Comment Pop-up */
+
 .commentPopup {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
