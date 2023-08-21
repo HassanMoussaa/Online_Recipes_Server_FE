@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Signup.css";
-import logo from "../images/logo192.png";
+import logo from "../images/Recipe_logo.jpeg";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [first_name, setFirst_name] = useState("");
-  const [last_name, setLast_name] = useState("");
+  const [name, setName] = useState("");
+  // const [last_name, setLast_name] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [resultMessage, setResultMessage] = useState("");
@@ -15,15 +15,14 @@ const Signup = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const submit = async () => {
-    if (!first_name || !last_name || !email || !password) {
+    if (name || !email || !password) {
       setErrorMessage("Please fill out all fields.");
       return;
     }
 
     try {
-      const result = await axios.post("http://localhost:8000/users/", {
-        first_name,
-        last_name,
+      const result = await axios.post("http://127.0.0.1:8000/api/register", {
+        name,
         email,
         password,
       });
@@ -51,16 +50,16 @@ const Signup = () => {
         <h2>Sign Up</h2>
         <input
           type="text"
-          placeholder="First_Name"
-          onChange={(e) => setFirst_name(e.target.value)}
+          placeholder="Full Name"
+          onChange={(e) => setName(e.target.value)}
           required
         />
-        <input
+        {/* <input
           type="text"
           placeholder="Last_name"
           onChange={(e) => setLast_name(e.target.value)}
           required
-        />
+        /> */}
         <input
           type="email"
           placeholder="Email"

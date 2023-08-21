@@ -1,6 +1,6 @@
 .signup_container {
   border: 1px solid;
-  /* background-color: aqua; */
+  background-color: rgb(228, 189, 189);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,9 +8,10 @@
   gap: 1rem;
   padding: 1rem;
   border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5px rgb(232, 127, 127);
   max-width: 30rem;
   margin: 20rem auto;
+  margin-top: 10rem;
 }
 
 .signup_container h2 {
@@ -33,20 +34,21 @@
 .signup_container button {
   width: 8rem;
   height: 2.5rem;
-  background-color: #4caf50;
+  background-color: rgb(203, 107, 107);
   color: white;
   border: none;
   border-radius: 3px;
   cursor: pointer;
   outline: none;
+  margin-top: 1rem;
 }
 
 .signup_container button:hover {
-  background-color: #45a049;
+  background-color: rgb(204, 25, 25);
 }
 
 .signup_container button:active {
-  background-color: #3e8e41;
+  background-color: rgb(204, 25, 25);
 }
 
 .signin_signup {
@@ -76,4 +78,8 @@
 
 .error {
   background-color: #ef4444; /* Red color */
+}
+
+.signup_container img {
+  border-radius: 50%;
 }
