@@ -9,16 +9,18 @@ function Homepage() {
 
   const [posts, setPosts] = useState([]);
 
-    const fetchPosts = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/books/feed', {
-        headers: { Authorization: `Bearer ${jwtToken}` },
-      });
-      setPosts(response.data); 
-    } catch (error) {
-      console.error('Error fetching posts:', error);
-    }
-  };
+   const fetchPosts = async () => {
+   
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/recipes/user', {
+      headers: { Authorization: `Bearer ${jwtToken}` },
+    });
+    
+    setPosts(response.data); 
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+  }
+};
 
 
   return (

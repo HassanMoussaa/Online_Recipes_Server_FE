@@ -99,8 +99,8 @@ const handleCommentSubmit = async () => {
       content: newComment,  
          };
       setNewComment('');
-      setIsCommenting(false); // Close the comment pop-up
-      setCommentsVisible(true); // Show comments section
+      setIsCommenting(false); 
+      setCommentsVisible(true); 
       
       setUpdatedPost((prevPost) => ({
       ...prevPost,
@@ -117,14 +117,14 @@ const handleCommentSubmit = async () => {
     <div className='post'>
       <div className='post__header'>
         <div className='post__headerAuthor'>
-            <Avatar alt={post.posted_by.first_name+post.posted_by.last_name} src={post.posted_by.image} />
-          {post.posted_by.first_name+" "+post.posted_by.last_name} . 
+            <Avatar alt={post.name} src={post.image} />
+          {post.name} . 
           {/* <span>{new Date(post.created_at).toLocaleTimeString()}</span> */}
         </div>
         <MoreHorizIcon />
       </div>
       <div className='post__image'>
-        <img src={post.picture} alt='post' />
+        <img src={post.image_url} alt='post' />
       </div>
       <div className="post__footer">
         <div className="post__footerIcons">
@@ -142,10 +142,10 @@ const handleCommentSubmit = async () => {
           </div>
         </div>
         <div className="post__details">
-          <p className="post__author">{post.author}</p>
-          <p className="post__review">{post.review}</p>
+          <p className="post__author">{post.name}</p>
+          <p className="post__review">{post.cuisine}</p>
         </div>
-        Liked by {post.liked_by.length} people.
+        {/* Liked by {post.liked_by.length} people. */}
        </div>
 
       <div className="post__comments">

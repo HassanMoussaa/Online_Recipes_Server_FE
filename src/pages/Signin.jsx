@@ -22,7 +22,7 @@ const Signin = () => {
         password,
       });
 
-      localStorage.setItem("jwt_token", result.data.token);
+      localStorage.setItem("jwt_token", result.data.authorization.token);
       navigate("/Homepage");
     } catch (error) {
       setError(error.response.data.message);
