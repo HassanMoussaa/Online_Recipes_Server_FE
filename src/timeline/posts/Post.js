@@ -117,8 +117,8 @@ const handleCommentSubmit = async () => {
     <div className='post'>
       <div className='post__header'>
         <div className='post__headerAuthor'>
-            <Avatar alt={post.name} src={post.image} />
-          {post.name} . 
+            <Avatar alt={post.user.name} src={post.image} />
+          {post.user.name} 
           {/* <span>{new Date(post.created_at).toLocaleTimeString()}</span> */}
         </div>
         <MoreHorizIcon />
