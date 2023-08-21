@@ -15,7 +15,7 @@ const Signup = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const submit = async () => {
-    if (name || !email || !password) {
+    if (!name || !email || !password) {
       setErrorMessage("Please fill out all fields.");
       return;
     }
@@ -26,7 +26,7 @@ const Signup = () => {
         email,
         password,
       });
-      if (result.data.message === "User created successfully!") {
+      if (result.data.message === "User created successfully") {
         setResultMessage("User created successfully!");
         setTimeout(() => {
           navigate("/");
