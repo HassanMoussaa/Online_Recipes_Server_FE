@@ -82,32 +82,26 @@ function Post({ post }) {
   };
   
 const handleCommentSubmit = async () => {
-    try {
-      await axios.post(
-        `http://127.0.0.1:8000/api/recipes/${post.id}/comments`,
-        { content: newComment },
-        {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-          },
-        }
-      );
-      const newCommentData = {
-      author: `${post.posted_by.first_name} ${post.posted_by.last_name}`,
-      content: newComment,  
-         };
-      setNewComment('');
-      setIsCommenting(false); 
-      setCommentsVisible(true); 
-      
-      setUpdatedPost((prevPost) => ({
-      ...prevPost,
-      comments: [...prevPost.comments, newCommentData],
-    }));
-    } catch (error) {
-      console.error("Error adding comment:", error);
-    }
-  };
+  try {
+    await axios.post(
+      `http://127.0.0.1:8000/api/recipes/${post.id}/comments`,
+      { comment: newComment },
+      {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      }
+    );
+
+    setNewComment('');
+    setIsCommenting(false);
+    
+   handleViewCommentsClick();
+  } catch (error) {
+    console.error("Error adding comment:", error);
+  }
+};
+
 
   const handleViewCommentsClick = async () => {
   try {
@@ -171,11 +165,11 @@ const handleCommentSubmit = async () => {
         </button>
         {commentsVisible && (
           <div className="commentList">
-            {comments.length > 0 ? (
-              comments.map((comment) => (
-                <div key={comment._id} className="comment">
-                  <p>{comment.author}</p>
-                  <p>{comment.content}</p>
+             {comments.length > 0 ? (
+      comments.map((comment) => (
+        <div key={comment.id} className="comment">
+          <p>{comment.user.name}</p>
+          <p>{comment.comment_text}</p>
                 </div>
               ))
             ) : (

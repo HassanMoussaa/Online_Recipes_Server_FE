@@ -3,7 +3,7 @@ import "./Timeline.css"
 import Sugesstions from './Sugesstions'
 import Post from './posts/Post'
 import axios from "axios";
-import PostUsers from './posts/PostUsers';
+
 
 function Timeline({ posts, fetchPosts, posts_users, fetchPosts_users }) {
   useEffect(() => {
@@ -31,7 +31,7 @@ function Timeline({ posts, fetchPosts, posts_users, fetchPosts_users }) {
           <div className='title_name'> <h1>Recipies </h1></div>
          {posts_users.recipes ? (
           posts_users.recipes.map(post => (
-            <PostUsers key={post.id} post={post} /> 
+            <Post key={post.id} post={post} /> 
             
 
           ))

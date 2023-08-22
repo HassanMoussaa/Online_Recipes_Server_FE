@@ -78,8 +78,8 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #d8d0d0;
-  color: black;
+  background-color: #c78282;
+  color: rgb(255, 255, 255);
 }
 
 .comment p {
