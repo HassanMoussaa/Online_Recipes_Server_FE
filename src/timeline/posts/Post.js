@@ -14,6 +14,7 @@ function Post({ post }) {
   const [commentsVisible, setCommentsVisible] = useState(false); 
    const [newComment, setNewComment] = useState('');
   const [updatedPost, setUpdatedPost] = useState(post);
+  const [comments, setComments] = useState([]);
 
   const jwtToken = localStorage.getItem("jwt_token");
 
@@ -73,10 +74,7 @@ function Post({ post }) {
     setIsCommenting(true);
   };
 
-  const handleViewCommentsClick = () => {
-    setCommentsVisible(!commentsVisible);
-    
-  };
+
 
   const handleCloseCommentPopup = () => {
     setIsCommenting(false);
@@ -86,7 +84,7 @@ function Post({ post }) {
 const handleCommentSubmit = async () => {
     try {
       await axios.post(
-        `http://localhost:8000/books/addComment/${post._id}`,
+        `http://127.0.0.1:8000/api/recipes/${post.id}/comments`,
         { content: newComment },
         {
           headers: {
@@ -110,6 +108,25 @@ const handleCommentSubmit = async () => {
       console.error("Error adding comment:", error);
     }
   };
+
+  const handleViewCommentsClick = async () => {
+  try {
+    if (!commentsVisible) {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/recipes/${post.id}/comments`,
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      );
+      setComments(response.data.comments);
+    }
+    setCommentsVisible(!commentsVisible);
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+  }
+};
 
 
   
@@ -142,27 +159,31 @@ const handleCommentSubmit = async () => {
           </div>
         </div>
         <div className="post__details">
-          <p className="post__author">{post.name}</p>
-          <p className="post__review">{post.cuisine}</p>
+          <p className="post__author"> Name: {post.name}</p>
+          <p className="post__review"> Cuisine: {post.cuisine}</p>
         </div>
         {/* Liked by {post.liked_by.length} people. */}
        </div>
 
-      <div className="post__comments">
-          <button onClick={handleViewCommentsClick}>
-            {commentsVisible ? "Hide Comments" : "View Comments..."}
-          </button>
-          {commentsVisible && (
-            <div className="commentList">
-              {updatedPost.comments.map((comment) => (
+          <div className="post__comments">
+        <button onClick={handleViewCommentsClick}>
+          {commentsVisible ? "Hide Comments" : "View Comments..."}
+        </button>
+        {commentsVisible && (
+          <div className="commentList">
+            {comments.length > 0 ? (
+              comments.map((comment) => (
                 <div key={comment._id} className="comment">
                   <p>{comment.author}</p>
                   <p>{comment.content}</p>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
+              ))
+            ) : (
+              <p>No comments available.</p>
+            )}
+          </div>
+        )}
+      </div>
 
        
       {isCommenting  && (

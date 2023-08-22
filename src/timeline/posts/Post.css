@@ -1,6 +1,7 @@
 .post {
   width: 300px;
   margin: 30px 40px 50px 40px;
+  /* border: 1px solid rgb(226, 185, 185); */
 }
 
 .post__header {
@@ -59,7 +60,7 @@
 
 .commentList {
   margin-top: 10px;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #ef9393;
   padding-top: 10px;
 }
 
@@ -69,7 +70,7 @@
   background: none;
   cursor: pointer;
   padding: 0;
-  color: white;
+  color: rgb(229, 139, 139);
 }
 
 .comment {
@@ -118,7 +119,7 @@
   display: block;
   margin-top: 10px;
   padding: 5px 10px;
-  background-color: #007bff;
+  background-color: rgb(226, 185, 185);
   color: #fff;
   border: none;
   border-radius: 5px;

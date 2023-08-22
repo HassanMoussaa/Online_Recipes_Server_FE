@@ -15,6 +15,7 @@ function Timeline({ posts, fetchPosts, posts_users, fetchPosts_users }) {
 
   return (
     <div className='timeline'>
+      <div className='title_name'> <h1>My Recipies </h1></div>
       <div className='timeline__left'>
         {posts.recipes ? (
           posts.recipes.map(post => (
@@ -27,6 +28,7 @@ function Timeline({ posts, fetchPosts, posts_users, fetchPosts_users }) {
         )}
         </div>
          <div className='timeline__users'>
+          <div className='title_name'> <h1>Recipies </h1></div>
          {posts_users.recipes ? (
           posts_users.recipes.map(post => (
             <PostUsers key={post.id} post={post} /> 
