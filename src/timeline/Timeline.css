@@ -1,11 +1,11 @@
 .timeline {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .timeline__left {
   flex: 1;
+  flex-wrap: wrap;
 }
 
 .timeline__right {
