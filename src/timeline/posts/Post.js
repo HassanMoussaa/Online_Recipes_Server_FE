@@ -157,8 +157,18 @@ const handleCommentSubmit = async () => {
         </div>
         <MoreHorizIcon />
       </div>
-      <div className='post__image'>
+     <div className='post__image'>
         <img src={post.image_url} alt='post' />
+        <div className='post__ingredient-overlay'>
+          <div className='post__ingredient-list'>
+            <h3>Ingredients</h3>
+            <ul>
+              {post.ingredients.map((ingredient) => (
+                <li key={ingredient.id}>{ingredient.name}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
       <div className="post__footer">
         <div className="post__footerIcons">
