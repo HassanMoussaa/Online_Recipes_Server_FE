@@ -9,41 +9,39 @@ import "./Post.css";
 import axios from 'axios'; 
 
 function Post({ post }) {
-  const [isLiked, setIsLiked] = useState(!post.is_liked); 
+  
   const [isCommenting, setIsCommenting] = useState(false); 
   const [commentsVisible, setCommentsVisible] = useState(false); 
    const [newComment, setNewComment] = useState('');
   const [updatedPost, setUpdatedPost] = useState(post);
   const [comments, setComments] = useState([]);
 
+  // Get initial liked status directly from the post object
+  const initialLikedStatus = post.is_liked;
+
+  // Use local state to manage the liked status
+  const [isLiked, setIsLiked] = useState(initialLikedStatus);
+
   const jwtToken = localStorage.getItem("jwt_token");
 
+  
   useEffect(() => {
     checkIsLiked();
   }, []);
 
-  const checkIsLiked = async () => {
-    try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/api/recipes/${post.id}/liked`,
-        {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-          },
-        }
-      );
-      setIsLiked(response.data.isLiked);
-    } catch (error) {
-      console.error("Error checking if post is liked:", error);
-    }
+  const checkIsLiked = () => {
+    // Get liked status from localStorage if available, otherwise use initial value
+    const storedLikedStatus = localStorage.getItem(`post_${post.id}_liked`);
+    const likedStatus = storedLikedStatus === 'true';
+    setIsLiked(likedStatus);
   };
 
   const handleLikeClick = async () => {
     try {
+      // Update liked status on the server
       if (isLiked) {
-        
-        await axios.delete(
-          `http://127.0.0.1:8000/api/recipes/${post.id}/like`,
+        await axios.post(
+          `http://127.0.0.1:8000/api/recipes/${post.id}/unlike`,
           {},
           {
             headers: {
@@ -52,7 +50,6 @@ function Post({ post }) {
           }
         );
       } else {
-       
         await axios.post(
           `http://127.0.0.1:8000/api/recipes/${post.id}/like`,
           {},
@@ -63,13 +60,14 @@ function Post({ post }) {
           }
         );
       }
-      setIsLiked(!isLiked);  
+
+      // Update local state and localStorage
+      setIsLiked(!isLiked);
+      localStorage.setItem(`post_${post.id}_liked`, JSON.stringify(!isLiked));
     } catch (error) {
       console.error("Error liking/unliking post:", error);
     }
   };
-
-
    const handleCommentClick = () => {
     setIsCommenting(true);
   };
