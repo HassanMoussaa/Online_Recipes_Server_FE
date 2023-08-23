@@ -8,6 +8,7 @@ function Modal({ onClose }) {
   const [cuisine, setCuisine] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [isUploaded, setIsUploaded] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const jwtToken = localStorage.getItem("jwt_token");
 
@@ -40,42 +41,68 @@ function Modal({ onClose }) {
   };
 
   const handleUpload = () => {
-    const formData = new FormData();
-    formData.append("image", imageFile);
-    formData.append("name", name);
-    formData.append("cuisine", cuisine);
+    const newErrors = {};
 
-    // Append ingredients as an array to the formData
-    ingredients.forEach((ingredient) => {
-      formData.append("ingredients[]", ingredient);
-    });
+    if (!imageFile) {
+      newErrors.image = "Image is required.";
+    }
+    if (!name) {
+      newErrors.name = "Name is required.";
+    }
+    if (!cuisine) {
+      newErrors.cuisine = "Cuisine is required.";
+    }
+    if (ingredients.length === 0) {
+      newErrors.ingredients = "At least one ingredient is required.";
+    }
 
-    axios
-      .post("http://localhost:8000/api/recipes/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      })
-      .then((response) => {
-        setIsUploaded(true);
+   
+    setErrors(newErrors);
 
-        setTimeout(() => {
-          setIsUploaded(false);
-          onClose();
-        }, 3000);
-      })
-      .catch((error) => {
-        console.log(error);
+  
+    if (Object.keys(newErrors).length === 0) {
+      const formData = new FormData();
+      formData.append("image", imageFile);
+      formData.append("name", name);
+      formData.append("cuisine", cuisine);
+
+      
+      ingredients.forEach((ingredient) => {
+        formData.append("ingredients[]", ingredient);
       });
+
+      axios
+        .post("http://localhost:8000/api/recipes/create", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        })
+        .then((response) => {
+          setIsUploaded(true);
+
+          setTimeout(() => {
+            setIsUploaded(false);
+            onClose();
+          }, 3000);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
     <div className="modal__overlay">
       <div className="modal__content">
         <input type="file" onChange={handleImageChange} />
+        {errors.image && <p className="error-message">{errors.image}</p>}
+
         <input type="text" placeholder="Name" value={name} onChange={handleNameChange} />
+        {errors.name && <p className="error-message">{errors.name}</p>}
+
         <input type="text" placeholder="Cuisine" value={cuisine} onChange={handleCuisineChange} />
+        {errors.cuisine && <p className="error-message">{errors.cuisine}</p>}
 
         {ingredients.map((ingredient, index) => (
           <div key={index}>
@@ -89,6 +116,7 @@ function Modal({ onClose }) {
           </div>
         ))}
         <button onClick={handleAddIngredient}>Add Ingredient</button>
+        {errors.ingredients && <p className="error-message">{errors.ingredients}</p>}
 
         <button onClick={handleUpload}>Upload</button>
         <button onClick={onClose}>Close</button>
