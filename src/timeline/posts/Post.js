@@ -7,6 +7,8 @@ import TelegramIcon from "@mui/icons-material/Telegram";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import "./Post.css";
 import axios from 'axios'; 
+import { FacebookShareButton } from 'react-share';
+
 
 function Post({ post }) {
   
@@ -179,7 +181,16 @@ const handleCommentSubmit = async () => {
                   <FavoriteBorderIcon className="postIcon" onClick={handleLikeClick} />
                 )}
             <ChatBubbleOutlineIcon className="postIcon" onClick={handleCommentClick} />
-            <TelegramIcon className="postIcon" />
+
+           <FacebookShareButton
+              url="https://github.com/HassanMoussaa/Online_Recipes_Server_FE"
+              quote={`Check out this delicious recipe:\nName: ${post.name}\nCuisine: ${post.cuisine}\nIngredients: ${post.ingredients.map(ingredient => ingredient.name).join(', ')}`}
+              hashtag="#React"
+            >
+              <TelegramIcon className="postIcon" />
+
+            </FacebookShareButton>
+
           </div>
              <div className="post__iconSave">
             {shoppingMessage !== undefined && (
