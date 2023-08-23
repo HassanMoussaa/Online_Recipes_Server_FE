@@ -18,17 +18,22 @@ function SearchResults() {
       </button>
       <h1>Search Results</h1>
       <ul className="search-results-list">
-        {searchResults.map((book) => ( 
-          <li key={book._id} className="book-card">
+        {searchResults.recipes.map((recipe) => (
+          <li key={recipe.id} className="recipe-card">
             <img
-              className="book-image"
-              src={book.picture ? book.picture : "default-image-url"}
-              alt={book.title}
+              className="recipe-image"
+              src={recipe.image_url}
+              alt={recipe.name}
             />
-            <div className="book-details">
-              <h3 className="book-title">{book.title}</h3>
-              <p className="book-author">{book.author}</p>
-              <p className="book-review">{book.review}</p>
+            <div className="recipe-details">
+              <h3 className="recipe-name">{recipe.name}</h3>
+              <p className="recipe-cuisine">Cuisine: {recipe.cuisine}</p>
+              <h4>Ingredients:</h4>
+              <ul className="ingredient-list">
+                {recipe.ingredients.map((ingredient) => (
+                  <li key={ingredient.id}>{ingredient.name}</li>
+                ))}
+              </ul>
             </div>
           </li>
         ))}

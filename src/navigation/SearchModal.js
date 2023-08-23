@@ -14,7 +14,7 @@ function SearchModal({ onClose, onSearch }) {
    try {
     const params = searchQuery ? { keywords: searchQuery } : {};
     
-    const response = await axios.get("http://localhost:8000/books/search", {
+    const response = await axios.get("http://127.0.0.1:8000/api/recipes/search", {
       params,
       headers: {
         Authorization: `Bearer ${jwtToken}`,
