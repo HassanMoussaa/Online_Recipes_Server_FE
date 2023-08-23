@@ -12,11 +12,11 @@ function Post({ post }) {
   
   const [isCommenting, setIsCommenting] = useState(false); 
   const [commentsVisible, setCommentsVisible] = useState(false); 
-   const [newComment, setNewComment] = useState('');
+  const [newComment, setNewComment] = useState('');
   const [comments, setComments] = useState([]);
   const [isAddedToShoppingList, setIsAddedToShoppingList] = useState(false);
-const [shoppingListErrorMessage, setShoppingListErrorMessage] = useState('');
-
+  const [shoppingListErrorMessage, setShoppingListErrorMessage] = useState('');
+  const [shoppingMessage,setShoppingMessage]=useState("")
  
   const initialLikedStatus = post.is_liked;
 
@@ -123,30 +123,28 @@ const handleCommentSubmit = async () => {
     console.error("Error fetching comments:", error);
   }
 };
-const handleAddToShoppingList = async () => {
-  try {
-    await axios.post(
-      `http://127.0.0.1:8000/api/shopping-list/add`,
-      {
-        recipe_id: post.id,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
+ const handleAddToShoppingList = async () => {
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:8000/api/shopping-list/add`,
+        { recipe_id: post.id },
+        { headers: { Authorization: `Bearer ${jwtToken}` } }
+      );
+      const receivedMessage = response.data.message;
+      setShoppingMessage(receivedMessage);
+
+      
+      setTimeout(() => {
+        setShoppingMessage('');
+      }, 3000);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setShoppingMessage(error.response.data.message);
+      } else {
+        console.error('Error adding recipe to shopping list:', error);
       }
-    );
-    setIsAddedToShoppingList(true);
-    localStorage.setItem(`post_${post.id}_added_to_shopping_list`, JSON.stringify(true));
-    setShoppingListErrorMessage(''); 
-  } catch (error) {
-    if (error.response && error.response.data && error.response.data.message) {
-      setShoppingListErrorMessage(error.response.data.message);
-    } else {
-      console.error("Error adding recipe to shopping list:", error);
     }
-  }
-};
+  };
 
   
   return (
@@ -173,26 +171,13 @@ const handleAddToShoppingList = async () => {
             <ChatBubbleOutlineIcon className="postIcon" onClick={handleCommentClick} />
             <TelegramIcon className="postIcon" />
           </div>
-          <div className="post__iconSave">
-              {isAddedToShoppingList ? (
-                  <div className="addedToShoppingList">
-                    Added to shopping list!
-                  </div>
-                ) : (
-                  <div className="addToShoppingListButton">
-                    <BookmarkBorderIcon
-                      className="postIcon"
-                      onClick={handleAddToShoppingList}
-                    />
-                  </div>
-                )}
-                {shoppingListErrorMessage && (
-                  <div className="shoppingListErrorMessage">
-                    {shoppingListErrorMessage === "Recipe is already in the shopping list"
-                      ? shoppingListErrorMessage
-                      : "An error occurred. Please try again later."}
-                  </div>
-                )}
+             <div className="post__iconSave">
+            {shoppingMessage !== undefined && (
+              <div className={`shoppingMessage ${shoppingMessage.includes('error') ? 'error' : 'success'}`}>
+                {shoppingMessage}
+              </div>
+            )}
+            <BookmarkBorderIcon className="postIcon" onClick={handleAddToShoppingList} />
           </div>
         </div>
         <div className="post__details">
