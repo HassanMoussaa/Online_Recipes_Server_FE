@@ -13,13 +13,14 @@ function Post({ post }) {
   const [isCommenting, setIsCommenting] = useState(false); 
   const [commentsVisible, setCommentsVisible] = useState(false); 
    const [newComment, setNewComment] = useState('');
-  const [updatedPost, setUpdatedPost] = useState(post);
   const [comments, setComments] = useState([]);
+  const [isAddedToShoppingList, setIsAddedToShoppingList] = useState(false);
+const [shoppingListErrorMessage, setShoppingListErrorMessage] = useState('');
 
-  // Get initial liked status directly from the post object
+ 
   const initialLikedStatus = post.is_liked;
 
-  // Use local state to manage the liked status
+  
   const [isLiked, setIsLiked] = useState(initialLikedStatus);
 
   const jwtToken = localStorage.getItem("jwt_token");
@@ -27,10 +28,15 @@ function Post({ post }) {
   
   useEffect(() => {
     checkIsLiked();
+    checkIfAddedToShoppingList();
   }, []);
 
+    const checkIfAddedToShoppingList = () => {
+    const addedToShoppingList = localStorage.getItem(`post_${post.id}_added_to_shopping_list`);
+    setIsAddedToShoppingList(addedToShoppingList === 'true');
+  };
+
   const checkIsLiked = () => {
-    // Get liked status from localStorage if available, otherwise use initial value
     const storedLikedStatus = localStorage.getItem(`post_${post.id}_liked`);
     const likedStatus = storedLikedStatus === 'true';
     setIsLiked(likedStatus);
@@ -38,7 +44,6 @@ function Post({ post }) {
 
   const handleLikeClick = async () => {
     try {
-      // Update liked status on the server
       if (isLiked) {
         await axios.post(
           `http://127.0.0.1:8000/api/recipes/${post.id}/unlike`,
@@ -61,7 +66,6 @@ function Post({ post }) {
         );
       }
 
-      // Update local state and localStorage
       setIsLiked(!isLiked);
       localStorage.setItem(`post_${post.id}_liked`, JSON.stringify(!isLiked));
     } catch (error) {
@@ -119,7 +123,30 @@ const handleCommentSubmit = async () => {
     console.error("Error fetching comments:", error);
   }
 };
-
+const handleAddToShoppingList = async () => {
+  try {
+    await axios.post(
+      `http://127.0.0.1:8000/api/shopping-list/add`,
+      {
+        recipe_id: post.id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      }
+    );
+    setIsAddedToShoppingList(true);
+    localStorage.setItem(`post_${post.id}_added_to_shopping_list`, JSON.stringify(true));
+    setShoppingListErrorMessage(''); 
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      setShoppingListErrorMessage(error.response.data.message);
+    } else {
+      console.error("Error adding recipe to shopping list:", error);
+    }
+  }
+};
 
   
   return (
@@ -147,7 +174,25 @@ const handleCommentSubmit = async () => {
             <TelegramIcon className="postIcon" />
           </div>
           <div className="post__iconSave">
-            <BookmarkBorderIcon className="postIcon" />
+              {isAddedToShoppingList ? (
+                  <div className="addedToShoppingList">
+                    Added to shopping list!
+                  </div>
+                ) : (
+                  <div className="addToShoppingListButton">
+                    <BookmarkBorderIcon
+                      className="postIcon"
+                      onClick={handleAddToShoppingList}
+                    />
+                  </div>
+                )}
+                {shoppingListErrorMessage && (
+                  <div className="shoppingListErrorMessage">
+                    {shoppingListErrorMessage === "Recipe is already in the shopping list"
+                      ? shoppingListErrorMessage
+                      : "An error occurred. Please try again later."}
+                  </div>
+                )}
           </div>
         </div>
         <div className="post__details">
@@ -193,7 +238,7 @@ const handleCommentSubmit = async () => {
           </div>
         </>
       )}
-
+          
 
       </div>
   );

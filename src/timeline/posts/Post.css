@@ -135,3 +135,17 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
+
+.addedToShoppingList {
+  color: green;
+  animation: fadeOut 3s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
