@@ -14,8 +14,8 @@ import logo from "../images/Recipe_logo.jpeg";
 import { useNavigate } from "react-router-dom"
 
 function Sidenav({fetchPosts}) {
-  
- const navigate = useNavigate();
+
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const handleCreateClick = () => {

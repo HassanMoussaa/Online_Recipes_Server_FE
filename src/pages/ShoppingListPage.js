@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ShoppingListPage.css';
 import { useNavigate } from 'react-router-dom';
-
+import CalendarPopup from './components/CalendarPopup';
 
 function ShoppingListPage() {
   const [recipes, setRecipes] = useState([]);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
   const navigate = useNavigate();
   const jwtToken = localStorage.getItem('jwt_token');
   const handleBackToHomepage = () => {
@@ -48,6 +49,15 @@ function ShoppingListPage() {
     }
   };
 
+
+   const handleOpenCalendarPopup = (recipeId) => {
+    setSelectedRecipe(recipeId);
+  };
+
+  const handleCloseCalendarPopup = () => {
+    setSelectedRecipe(null);
+  };
+
   return (
     <div className="shopping-list">
 
@@ -75,10 +85,24 @@ function ShoppingListPage() {
               >
                 Remove
               </button>
+                <button
+                className="calendar-button"
+                onClick={() => handleOpenCalendarPopup(recipe.id)}
+              >
+                Add to Calendar
+              </button>
             </div>
           </li>
         ))}
       </ul>
+
+      {selectedRecipe !== null && (
+        <CalendarPopup
+          onClose={handleCloseCalendarPopup}
+          recipeId={selectedRecipe}
+          jwtToken={jwtToken}
+        />
+      )}
     </div>
   );
 }
