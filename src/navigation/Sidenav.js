@@ -11,9 +11,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Modal from "./Modal"
 import SearchModal from "./SearchModal";
 import logo from "../images/Recipe_logo.jpeg";
+import { useNavigate } from "react-router-dom"
 
 function Sidenav({fetchPosts}) {
-
+  
+ const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const handleCreateClick = () => {
@@ -33,7 +35,9 @@ function Sidenav({fetchPosts}) {
   const closeSearchModal = () => {
     setIsSearchModalOpen(false);
   };
-
+  const navigateToShoppingList = () => {
+    navigate("/shopping-list"); 
+  };
     
   return (
     <div className='sidenav'>
@@ -56,9 +60,9 @@ function Sidenav({fetchPosts}) {
             <span>Explore</span>    
         </button>
 
-         <button className='sidenav__button'>
-            <SlideshowIcon />
-            <span>Reels</span>    
+         <button className="sidenav__button" onClick={navigateToShoppingList}>
+          <SlideshowIcon />
+          <span>Shopping List</span>
         </button>
 
 

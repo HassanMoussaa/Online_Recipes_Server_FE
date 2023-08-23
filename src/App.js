@@ -4,7 +4,7 @@ import Signin from "./pages/Signin"
 import Homepage from './Homepage';
 import SearchResults from './pages/SearchResults';
 import Signup from './pages/Signup';
-
+import ShoppingListPage from './pages/ShoppingListPage';
 function App() {
   return (
        <BrowserRouter>
@@ -14,6 +14,7 @@ function App() {
         <Route path="/homepage" >
           <Route index element={<Homepage/>} />
         </Route>
+        <Route exact path="/shopping-list" element={<ShoppingListPage />} />
         <Route path='/SearchResults' element={<SearchResults />} />
         <Route path='*' element={<h1>404</h1>} />
       </Routes>

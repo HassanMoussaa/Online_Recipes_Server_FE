@@ -1,0 +1,76 @@
+/* ShoppingListPage.css */
+
+.shopping-list {
+  margin: 20px;
+}
+
+.shopping-list__header {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.recipe-list {
+  list-style: none;
+  padding: 0;
+}
+
+.recipe-item {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-image {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.recipe-image img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.recipe-details {
+  flex: 3;
+}
+
+.recipe-name {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.recipe-cuisine {
+  font-size: 16px;
+  color: #888;
+}
+
+.back-button-container {
+  margin-bottom: 20px;
+}
+
+.back-button-list {
+  background-color: rgb(226, 185, 185);
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  color: white;
+}
+
+.recipe-actions {
+  margin-left: auto;
+}
+
+.remove-button {
+  background-color: rgb(226, 185, 185);
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 3px;
+  cursor: pointer;
+}
