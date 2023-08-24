@@ -12,12 +12,14 @@ import Modal from "./Modal"
 import SearchModal from "./SearchModal";
 import logo from "../images/Recipe_logo.jpeg";
 import { useNavigate } from "react-router-dom"
+import Overlay from "./components_nav/Overlay";
 
 function Sidenav({fetchPosts}) {
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  
   const handleCreateClick = () => {
     setIsModalOpen(true);
   };
@@ -81,6 +83,9 @@ function Sidenav({fetchPosts}) {
             <span>Create</span>    
         </button>
 
+         {/* The overlay */}
+         {isModalOpen && <Overlay onClose={handleModalClose} />}
+        
          {/* for modal work */}
           {isModalOpen && <Modal onClose={handleModalClose} />}
          

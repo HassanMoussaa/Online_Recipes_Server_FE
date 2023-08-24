@@ -8,12 +8,10 @@ function SearchModal({ onClose, onSearch }) {
   const navigate = useNavigate();
   const jwtToken = localStorage.getItem("jwt_token");
 
-  const handleSearch = async () => {
-    // if (!searchQuery) return;
+ const handleSearch = async () => {
+  try {
+    const params = searchQuery ? { query: searchQuery } : {};
 
-   try {
-    const params = searchQuery ? { keywords: searchQuery } : {};
-    
     const response = await axios.get("http://127.0.0.1:8000/api/recipes/search", {
       params,
       headers: {
@@ -21,16 +19,17 @@ function SearchModal({ onClose, onSearch }) {
       },
     });
 
-      if (response) {
-        const searchResults = response.data; 
-        navigate("/SearchResults", { state: { searchResults } });
-      }
-    } catch (error) {
-      console.error("Error searching for books:", error);
+    if (response) {
+      const searchResults = response.data;
+      navigate("/SearchResults", { state: { searchResults } });
     }
+  } catch (error) {
+    console.error("Error searching for recipes:", error);
+  }
 
-    onClose();
-  };
+  onClose();
+};
+
 
   return (
     <div className="modal__overlay">
