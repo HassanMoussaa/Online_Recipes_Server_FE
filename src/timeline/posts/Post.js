@@ -202,8 +202,8 @@ const handleCommentSubmit = async () => {
           </div>
         </div>
         <div className="post__details">
-          <p className="post__author"> Name: {post.name}</p>
-          <p className="post__review"> Cuisine: {post.cuisine}</p>
+          <p className="post__author"> <b>Name:</b> {post.name}</p>
+          <p className="post__review"> <b>Cuisine:</b> {post.cuisine}</p>
         </div>
         {/* Liked by {post.liked_by.length} people. */}
        </div>
