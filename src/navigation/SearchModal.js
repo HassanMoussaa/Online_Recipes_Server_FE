@@ -36,7 +36,7 @@ function SearchModal({ onClose, onSearch }) {
       <div className="modal__content">
         <input
           type="text"
-          placeholder="Search books..."
+          placeholder="Search recepies..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
