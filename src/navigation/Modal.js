@@ -97,13 +97,13 @@ function Modal({ onClose }) {
       <div className="modal__content">
         <input type="file" onChange={handleImageChange} />
         {errors.image && <p className="error-message">{errors.image}</p>}
-
+         <div className="name-cuisine">
         <input type="text" placeholder="Name" value={name} onChange={handleNameChange} />
         {errors.name && <p className="error-message">{errors.name}</p>}
 
         <input type="text" placeholder="Cuisine" value={cuisine} onChange={handleCuisineChange} />
         {errors.cuisine && <p className="error-message">{errors.cuisine}</p>}
-
+        </div>
         {ingredients.map((ingredient, index) => (
           <div key={index}>
             <input
@@ -117,9 +117,10 @@ function Modal({ onClose }) {
         ))}
         <button onClick={handleAddIngredient}>Add Ingredient</button>
         {errors.ingredients && <p className="error-message">{errors.ingredients}</p>}
-
+        <div className="upload-close">
         <button onClick={handleUpload}>Upload</button>
         <button onClick={onClose}>Close</button>
+        </div>
         {isUploaded && <p className="success-message">Recipe uploaded successfully!</p>}
       </div>
     </div>

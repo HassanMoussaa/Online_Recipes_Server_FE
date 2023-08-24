@@ -14,26 +14,43 @@
 .modal__content {
   background-color: rgb(226, 185, 185);
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 0px 0px 10px rgb(226, 185, 185);
   width: 400px;
   color: white;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .modal__content h2 {
   margin-bottom: 15px;
 }
+.modal__content input[type="text"] {
+  margin-bottom: 15px;
+  color: white;
+  width: 10rem;
+  height: 2rem;
+  background-color: #c77070;
+  border-width: 0;
+  border-radius: 10px;
+}
+
+.modal__content input[type="text"]::placeholder {
+  color: white;
+  text-align: center;
+}
 
 .modal__content input[type="file"] {
   margin-bottom: 15px;
   color: white;
+  background-color: #c77070;
+  width: 20rem;
+  border-radius: 10px;
 }
 
 .modal__content button {
-  background-color: #efd3d3;
+  background-color: #c77070;
   color: white;
   border: none;
   width: 10rem;
@@ -43,6 +60,7 @@
   cursor: pointer;
   margin-right: 10px;
   text-align: center;
+  border-radius: 10px;
 }
 
 .modal__content button:last-child {
@@ -53,4 +71,14 @@
   color: #5cb85c;
   font-weight: bold;
   margin-top: 10px;
+}
+
+.upload-close {
+  display: flex;
+  gap: 5rem;
+}
+
+.name-cuisine {
+  display: flex;
+  gap: 5rem;
 }
